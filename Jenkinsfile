@@ -22,9 +22,9 @@ pipeline {
 				echo "BUILD_URL - $env.BUILD_URL"
 			}
 		}
-		stage('Compile') {
+		stage('Package') {
 			steps {
-				sh "mvn clean compile"
+				sh "mvn package -DskipTests"
 			}
 		}
 		// stage('Test') {
@@ -37,12 +37,25 @@ pipeline {
 		// 		sh "mvn failsafe:integration-test failsafe:verify"
 		// 	}
 		// }
-		// stage('Build docker image') {
+		stage('Build docker image') {
+			steps {
+				// docker build -t tombanco83/currency-exchange-devops:$env.BUILD_TAG
+				script {
+					dockerImage = docker.build("tombanco83/currency-exchange-devops:${env.BUILD_TAG}")
+				}
+			}
 
-		// }
-		// stage('Push Docker image') {
-
-		// }
+		}
+		stage('Push Docker image') {
+			steps {
+				script {
+					docker.withRegistry('', 'dockerhub') {
+						dockerImage.push()
+						dockerImage.push('latest')
+					}
+				}
+			}
+		}
 	}
 	post {
 		always {
