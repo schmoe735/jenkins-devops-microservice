@@ -1,6 +1,6 @@
 pipeline {
-	agent any
-	// agent { docker {image 'maven:3.6.3'}}
+	// agent any
+	agent { docker {image 'java:openjdk-8u111-jdk-alpine'}}
 	environment {
 		dockerHome = tool 'dockerjenkins'
 		mavenHome = tool  'mvnjenkins'
