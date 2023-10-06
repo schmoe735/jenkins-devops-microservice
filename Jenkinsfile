@@ -1,6 +1,6 @@
 pipeline {
-	// agent any
-	agent { docker { image 'openjdk:11' }}
+	agent any
+	agent { docker { image 'java:8' }}
 	environment {
 		dockerHome = tool 'dockerjenkins'
 		mavenHome = tool  'mvnjenkins'
@@ -38,6 +38,9 @@ pipeline {
 			}
 		}
 		// stage('Build docker image') {
+
+		// }
+		// stage('Push Docker image') {
 
 		// }
 	}
