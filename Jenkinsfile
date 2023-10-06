@@ -1,5 +1,5 @@
 pipeline {
-	agent any
+	// agent any
 	agent { docker { image 'java:8-jdk' }}
 	environment {
 		dockerHome = tool 'dockerjenkins'
