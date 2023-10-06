@@ -37,9 +37,9 @@ pipeline {
 				sh "mvn failsafe:integration-test failsafe:verify"
 			}
 		}
-		stage('Build docker image') {
+		// stage('Build docker image') {
 
-		}
+		// }
 	}
 	post {
 		always {
