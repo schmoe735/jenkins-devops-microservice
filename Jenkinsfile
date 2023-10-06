@@ -1,6 +1,6 @@
 pipeline {
 	// agent any
-	agent { docker {image 'java:openjdk-8u111-jdk-alpine'}}
+	agent { docker { image 'openjdk:11' }}
 	environment {
 		dockerHome = tool 'dockerjenkins'
 		mavenHome = tool  'mvnjenkins'
@@ -36,6 +36,9 @@ pipeline {
 			steps {
 				sh "mvn failsafe:integration-test failsafe:verify"
 			}
+		}
+		stage('Build docker image') {
+
 		}
 	}
 	post {
