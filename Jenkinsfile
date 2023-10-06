@@ -1,6 +1,6 @@
 pipeline {
-	agent any
-	// agent { docker { image 'java:8-jdk' }}
+	// agent any
+	agent { docker { image 'openjdk:8-jdk-alpine' }}
 	environment {
 		dockerHome = tool 'dockerjenkins'
 		mavenHome = tool  'mvnjenkins'
@@ -22,21 +22,26 @@ pipeline {
 				echo "BUILD_URL - $env.BUILD_URL"
 			}
 		}
+		stage('Compine') {
+			steps {
+				sh "mvn clean compile"
+			}
+		}
+		stage('Test') {
+			steps {
+				sh "mvn test"
+			}
+		}
+		stage('Integration Test') {
+			steps {
+				sh "mvn failsafe:integration-test failsafe:verify"
+			}
+		}
 		stage('Package') {
 			steps {
 				sh "mvn package -DskipTests"
 			}
 		}
-		// stage('Test') {
-		// 	steps {
-		// 		sh "mvn test"
-		// 	}
-		// }
-		// stage('Integration Test') {
-		// 	steps {
-		// 		sh "mvn failsafe:integration-test failsafe:verify"
-		// 	}
-		// }
 		stage('Build docker image') {
 			steps {
 				// docker build -t tombanco83/currency-exchange-devops:$env.BUILD_TAG
