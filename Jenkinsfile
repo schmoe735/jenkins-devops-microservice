@@ -1,6 +1,6 @@
 pipeline {
-	// agent any
-	agent { docker { image 'java:8' }}
+	agent any
+	agent { docker { image 'java:8-jdk' }}
 	environment {
 		dockerHome = tool 'dockerjenkins'
 		mavenHome = tool  'mvnjenkins'
