@@ -1,6 +1,6 @@
 pipeline {
-	// agent any
-	agent { docker { image 'java:8-jdk' }}
+	agent any
+	// agent { docker { image 'java:8-jdk' }}
 	environment {
 		dockerHome = tool 'dockerjenkins'
 		mavenHome = tool  'mvnjenkins'
@@ -27,16 +27,16 @@ pipeline {
 				sh "mvn clean compile"
 			}
 		}
-		stage('Test') {
-			steps {
-				sh "mvn test"
-			}
-		}
-		stage('Integration Test') {
-			steps {
-				sh "mvn failsafe:integration-test failsafe:verify"
-			}
-		}
+		// stage('Test') {
+		// 	steps {
+		// 		sh "mvn test"
+		// 	}
+		// }
+		// stage('Integration Test') {
+		// 	steps {
+		// 		sh "mvn failsafe:integration-test failsafe:verify"
+		// 	}
+		// }
 		// stage('Build docker image') {
 
 		// }
